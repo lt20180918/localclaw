@@ -1,8 +1,11 @@
 import { useAuth } from '../context/AuthContext';
 import StatusPanel from '../components/StatusPanel';
+import ChatWindow from '../components/ChatWindow';
 
 export default function DashboardPage() {
     const { logout } = useAuth();
+
+    const token = localStorage.getItem('token');
 
     return (
         <div className="app-layout">
@@ -16,15 +19,7 @@ export default function DashboardPage() {
 
                 <StatusPanel />
 
-                {/* Phase 3 将添加对话界面 */}
-                <div className="card" style={{ marginTop: 'var(--space-md)' }}>
-                    <div className="card-header">
-                        <span className="card-title">对话</span>
-                    </div>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>
-                        对话功能将在 Phase 3 实现
-                    </p>
-                </div>
+                <ChatWindow token={token} />
             </div>
         </div>
     );
