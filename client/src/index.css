@@ -65,7 +65,9 @@
 }
 
 /* ─── Reset ─── */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -129,7 +131,8 @@ a:hover {
 }
 
 /* ─── Form Elements ─── */
-input, textarea {
+input,
+textarea {
   font-family: var(--font-sans);
   font-size: 0.9375rem;
   color: var(--text-primary);
@@ -142,12 +145,14 @@ input, textarea {
   width: 100%;
 }
 
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
   border-color: var(--color-primary);
   box-shadow: 0 0 0 3px var(--color-primary-glow);
 }
 
-input::placeholder, textarea::placeholder {
+input::placeholder,
+textarea::placeholder {
   color: var(--text-muted);
 }
 
@@ -203,17 +208,33 @@ input::placeholder, textarea::placeholder {
 
 /* ─── Animations ─── */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .animate-fadeIn {
@@ -381,6 +402,59 @@ input::placeholder, textarea::placeholder {
   color: var(--text-primary);
 }
 
+/* ─── Status Panel ─── */
+.status-panel {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+}
+
+.status-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+
+.status-panel-header h3 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-md);
+}
+
+.status-item {
+  background: var(--bg-elevated);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+}
+
+.status-item-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-xs);
+}
+
+.status-item-value {
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 0.8125rem;
+}
+
 /* ─── Responsive ─── */
 @media (max-width: 640px) {
   .login-card {
@@ -389,5 +463,9 @@ input::placeholder, textarea::placeholder {
 
   .main-content {
     padding: var(--space-md);
+  }
+
+  .status-grid {
+    grid-template-columns: 1fr;
   }
 }

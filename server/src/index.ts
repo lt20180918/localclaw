@@ -2,6 +2,8 @@ import app from './app';
 import { config } from './config';
 import { initDatabase } from './db/database';
 import { initAdminPassword } from './services/authService';
+import { getGatewayClient } from './services/gatewayClient';
+import { setupWebSocket } from './services/chatBridge';
 
 // ─── 启动流程 ───
 
@@ -11,7 +13,7 @@ async function main() {
     console.log('│  Starting...                          │');
     console.log('└──────────────────────────────────────┘');
 
-    // 1. 初始化数据库 (sql.js 是异步的)
+    // 1. 初始化数据库
     await initDatabase();
 
     // 2. 初始化管理员密码
@@ -24,19 +26,30 @@ async function main() {
         console.log(`[Server] Gateway: ${config.gatewayUrl}`);
     });
 
-    // 4. Phase 3: WebSocket 服务将挂载到 server 上
-    // setupWebSocket(server);
+    // 4. 启动 WebSocket 桥接
+    setupWebSocket(server);
+
+    // 5. 连接 OpenClaw Gateway
+    const gw = getGatewayClient();
+    gw.connect();
+
+    gw.on('connected', () => {
+        console.log('[Server] Gateway bridge established');
+    });
+
+    gw.on('disconnected', () => {
+        console.log('[Server] Gateway bridge lost, will reconnect...');
+    });
 
     // 优雅关闭
-    process.on('SIGTERM', () => {
-        console.log('[Server] SIGTERM received, shutting down...');
+    const shutdown = () => {
+        console.log('[Server] Shutting down...');
+        gw.disconnect();
         server.close(() => process.exit(0));
-    });
+    };
 
-    process.on('SIGINT', () => {
-        console.log('[Server] SIGINT received, shutting down...');
-        server.close(() => process.exit(0));
-    });
+    process.on('SIGTERM', shutdown);
+    process.on('SIGINT', shutdown);
 }
 
 main().catch((err) => {

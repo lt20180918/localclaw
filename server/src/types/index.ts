@@ -29,6 +29,8 @@ export interface GatewayStatus {
     connected: boolean;
     gatewayVersion?: string;
     uptime?: number;
+    status?: Record<string, unknown>;
+    health?: Record<string, unknown>;
 }
 
 export interface OpenClawStatus {

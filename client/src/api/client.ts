@@ -58,4 +58,10 @@ export const api = {
             method: 'POST',
             body: JSON.stringify({ oldPassword, newPassword }),
         }),
+
+    /** 获取会话列表 */
+    getSessions: () => request<unknown>('/sessions'),
+
+    /** 获取可用模型 */
+    getModels: () => request<unknown>('/models'),
 };
