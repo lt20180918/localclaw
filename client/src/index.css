@@ -1,0 +1,393 @@
+/* ═══════════════════════════════════════════════════════════
+   OpenClaw Web Control Panel — Design System
+   深色主题 + 响应式
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── CSS Custom Properties ─── */
+:root {
+  /* 主色调 */
+  --color-primary: #6366f1;
+  --color-primary-hover: #818cf8;
+  --color-primary-glow: rgba(99, 102, 241, 0.3);
+
+  /* 背景层级 */
+  --bg-base: #0b0d17;
+  --bg-surface: #111827;
+  --bg-elevated: #1e2536;
+  --bg-hover: #2a3142;
+
+  /* 文字 */
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  /* 边框 */
+  --border-color: #1e293b;
+  --border-subtle: rgba(255, 255, 255, 0.06);
+
+  /* 状态色 */
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+
+  /* 间距 */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  /* 圆角 */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* 阴影 */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 24px var(--color-primary-glow);
+
+  /* 字体 */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+
+  /* 过渡 */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* 布局 */
+  --sidebar-width: 280px;
+  --header-height: 56px;
+}
+
+/* ─── Reset ─── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg-base);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-primary-hover);
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* ─── Utility Classes ─── */
+.glass {
+  background: rgba(17, 24, 39, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+}
+
+/* ─── Form Elements ─── */
+input, textarea {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  outline: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  width: 100%;
+}
+
+input:focus, textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-glow);
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* ─── Buttons ─── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  outline: none;
+  white-space: nowrap;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-primary), #8b5cf6);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--color-primary-hover), #a78bfa);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+/* ─── Animations ─── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease-out;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-color);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+/* ─── Login Page ─── */
+.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  padding: var(--space-lg);
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+    var(--bg-base);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  padding: var(--space-2xl);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  animation: fadeIn 0.5s ease-out;
+}
+
+.login-card h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: var(--space-xs);
+  background: linear-gradient(135deg, var(--text-primary), var(--color-primary-hover));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.login-card .subtitle {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  margin-bottom: var(--space-xl);
+}
+
+.login-card .logo {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-md);
+  display: block;
+}
+
+.form-group {
+  margin-bottom: var(--space-md);
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-xs);
+}
+
+.login-error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: var(--color-error);
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  margin-bottom: var(--space-md);
+  animation: fadeIn 0.3s ease-out;
+}
+
+.login-card .btn-primary {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  margin-top: var(--space-sm);
+}
+
+/* ─── Dashboard Layout ─── */
+.app-layout {
+  display: flex;
+  min-height: 100dvh;
+}
+
+.main-content {
+  flex: 1;
+  padding: var(--space-lg);
+  overflow-y: auto;
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-xl);
+}
+
+.dashboard-header h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+/* ─── Status Indicator ─── */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: var(--space-sm);
+}
+
+.status-dot.online {
+  background: var(--color-success);
+  box-shadow: 0 0 6px var(--color-success);
+}
+
+.status-dot.offline {
+  background: var(--color-error);
+}
+
+/* ─── Cards ─── */
+.card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  transition: border-color var(--transition-fast);
+}
+
+.card:hover {
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+
+.card-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.card-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 640px) {
+  .login-card {
+    padding: var(--space-lg);
+  }
+
+  .main-content {
+    padding: var(--space-md);
+  }
+}
