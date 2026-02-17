@@ -1,9 +1,14 @@
+import { useState } from 'react';
 import { useAuth } from './context/AuthContext';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
+import ChatPage from './pages/ChatPage';
+import SettingsPage from './pages/SettingsPage';
+import Sidebar from './components/Sidebar';
 
 export default function App() {
-    const { isAuthenticated, isLoading } = useAuth();
+    const { isAuthenticated, isLoading, logout } = useAuth();
+    const [activePage, setActivePage] = useState('dashboard');
 
     // 加载中 — Token 验证
     if (isLoading) {
@@ -22,6 +27,33 @@ export default function App() {
         return <LoginPage />;
     }
 
-    // 已认证 → 仪表盘
-    return <DashboardPage />;
+    const token = localStorage.getItem('token');
+
+    // 已认证 → 带侧边栏的主界面
+    return (
+        <div className="app-layout">
+            <Sidebar activePage={activePage} onNavigate={setActivePage} />
+
+            <main className="main-content">
+                <div className="main-header">
+                    <button className="btn btn-ghost btn-sm mobile-menu-btn" onClick={() => {
+                        document.querySelector('.sidebar')?.classList.toggle('sidebar-open');
+                    }}>
+                        ☰
+                    </button>
+                    <div className="main-header-right">
+                        <button className="btn btn-ghost btn-sm" onClick={logout}>
+                            退出登录
+                        </button>
+                    </div>
+                </div>
+
+                <div className="page-container">
+                    {activePage === 'dashboard' && <DashboardPage />}
+                    {activePage === 'chat' && <ChatPage token={token} />}
+                    {activePage === 'settings' && <SettingsPage />}
+                </div>
+            </main>
+        </div>
+    );
 }
