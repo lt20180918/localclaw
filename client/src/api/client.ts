@@ -84,4 +84,36 @@ export const api = {
     /** 触发 OpenClaw 升级 */
     triggerUpdate: () =>
         request('/openclaw/update', { method: 'POST' }),
+
+    // ─── Setup Wizard ───
+
+    /** 检查初始设置状态 */
+    getSetupStatus: () =>
+        request<{ setupComplete: boolean }>('/setup/status'),
+
+    /** 获取 Setup 配置 (API Key 已脱敏) */
+    getSetupConfig: () =>
+        request<{
+            llm_api_key: string;
+            llm_api_key_set: boolean;
+            llm_model: string;
+            llm_base_url: string;
+            channel_appid: string;
+            channel_secret: string;
+            channel_secret_set: boolean;
+            setup_complete: boolean;
+        }>('/setup/config'),
+
+    /** 保存 Setup 配置 */
+    saveSetup: (config: Record<string, string>) =>
+        request('/setup/save', {
+            method: 'POST',
+            body: JSON.stringify(config),
+        }),
+
+    /** 测试 API Key */
+    testApiKey: () =>
+        request<{ valid: boolean; method: string; detail: unknown }>('/setup/test', {
+            method: 'POST',
+        }),
 };

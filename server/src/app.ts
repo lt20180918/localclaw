@@ -6,6 +6,7 @@ import { errorHandler } from './middleware/errorHandler';
 import authRoutes from './routes/auth';
 import statusRoutes from './routes/status';
 import openclawRoutes from './routes/openclaw';
+import setupRoutes from './routes/setup';
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use((req, _res, next) => {
 app.use('/api', authRoutes);
 app.use('/api', statusRoutes);
 app.use('/api', openclawRoutes);
+app.use('/api', setupRoutes);
 
 // ─── 静态文件 (生产环境: 前端构建产物) ───
 const clientDist = path.resolve(__dirname, '../../client/dist');
