@@ -1,0 +1,31 @@
+# OpenClaw Web Control Panel — Docker Compose
+# 使用: docker compose up --build -d
+
+services:
+  web:
+    build: .
+    container_name: openclaw-web
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - openclaw-data:/app/data
+    environment:
+      - PORT=8080
+      - JWT_SECRET=${JWT_SECRET:-change-me-in-production}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin123}
+      - OPENCLAW_GATEWAY_URL=${OPENCLAW_GATEWAY_URL:-ws://host.docker.internal:18789}
+      - OPENCLAW_GATEWAY_TOKEN=${OPENCLAW_GATEWAY_TOKEN:-}
+      - DB_PATH=/app/data/localclaw.db
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8080/api/status", "||", "exit", "1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  openclaw-data:
+    driver: local
