@@ -6,6 +6,7 @@ interface SidebarProps {
 const NAV_ITEMS = [
     { id: 'dashboard', label: '仪表盘', icon: '📊' },
     { id: 'chat', label: '对话', icon: '💬' },
+    { id: 'config', label: '配置', icon: '🔧' },
     { id: 'settings', label: '设置', icon: '⚙️' },
 ];
 

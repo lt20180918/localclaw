@@ -3,6 +3,7 @@ import { useAuth } from './context/AuthContext';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import ChatPage from './pages/ChatPage';
+import ConfigPage from './pages/ConfigPage';
 import SettingsPage from './pages/SettingsPage';
 import Sidebar from './components/Sidebar';
 
@@ -51,6 +52,7 @@ export default function App() {
                 <div className="page-container">
                     {activePage === 'dashboard' && <DashboardPage />}
                     {activePage === 'chat' && <ChatPage token={token} />}
+                    {activePage === 'config' && <ConfigPage />}
                     {activePage === 'settings' && <SettingsPage />}
                 </div>
             </main>

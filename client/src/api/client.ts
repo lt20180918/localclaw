@@ -64,4 +64,24 @@ export const api = {
 
     /** 获取可用模型 */
     getModels: () => request<unknown>('/models'),
+
+    /** 获取 OpenClaw 配置 */
+    getConfig: () => request<Record<string, unknown>>('/config'),
+
+    /** 更新 OpenClaw 配置 */
+    setConfig: (config: Record<string, unknown>) =>
+        request('/config', {
+            method: 'PUT',
+            body: JSON.stringify(config),
+        }),
+
+    /** 获取 Agent 列表 */
+    getAgents: () => request<unknown>('/agents'),
+
+    /** 获取日志 */
+    getLogs: (lines = 100) => request<unknown>(`/logs?lines=${lines}`),
+
+    /** 触发 OpenClaw 升级 */
+    triggerUpdate: () =>
+        request('/openclaw/update', { method: 'POST' }),
 };

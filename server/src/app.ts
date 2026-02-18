@@ -5,6 +5,7 @@ import { rateLimiter } from './middleware/rateLimit';
 import { errorHandler } from './middleware/errorHandler';
 import authRoutes from './routes/auth';
 import statusRoutes from './routes/status';
+import openclawRoutes from './routes/openclaw';
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use((req, _res, next) => {
 // ─── API 路由 ───
 app.use('/api', authRoutes);
 app.use('/api', statusRoutes);
+app.use('/api', openclawRoutes);
 
 // ─── 静态文件 (生产环境: 前端构建产物) ───
 const clientDist = path.resolve(__dirname, '../../client/dist');
